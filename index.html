@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Makery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+        }
+
+        .listmonk-form h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .listmonk-form p {
+            margin-bottom: 15px;
+        }
+
+        .listmonk-form input[type="email"],
+        .listmonk-form input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .listmonk-form input[type="email"]:focus,
+        .listmonk-form input[type="text"]:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .listmonk-form input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .listmonk-form label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .listmonk-form span {
+            display: block;
+            margin-left: 24px;
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        .listmonk-form input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .listmonk-form input[type="submit"]:hover {
+            background: #2980b9;
+        }
+
+        .listmonk-form input[type="submit"]:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The Makery</h1>
+        <p class="tagline">Making things, one project at a time.</p>
+
+        <div id="message" class="message"></div>
+
+        <form method="post" action="https://listmonk.home.stavros.io/subscription/form" class="listmonk-form" id="subscription-form">
+            <div>
+                <h3>Subscribe to our newsletter</h3>
+                <input type="hidden" name="nonce" />
+                <input type="hidden" name="l" value="9d008ac8-09f9-4bee-a887-c80485a901ca" />
+
+                <p><input type="email" name="email" id="email" required placeholder="E-mail" /></p>
+
+                <input type="submit" value="Subscribe" id="submit-button" />
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('subscription-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const submitButton = document.getElementById('submit-button');
+            const messageElement = document.getElementById('message');
+            const emailInput = document.getElementById('email');
+
+            submitButton.disabled = true;
+            submitButton.value = 'Subscribing...';
+            messageElement.className = 'message';
+            messageElement.textContent = '';
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    messageElement.className = 'message success';
+                    messageElement.textContent = 'Successfully subscribed! Check your email to confirm your subscription.';
+                    emailInput.value = '';
+                    form.classList.add('hidden');
+                } else {
+                    throw new Error('Subscription failed');
+                }
+            } catch (error) {
+                messageElement.className = 'message error';
+                messageElement.textContent = 'Something went wrong. Please try again later.';
+                submitButton.disabled = false;
+                submitButton.value = 'Subscribe';
+            }
+        });
+    </script>
+</body>
+</html>
