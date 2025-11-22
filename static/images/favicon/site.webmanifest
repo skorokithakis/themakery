@@ -1,6 +1,6 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "The Makery",
+  "short_name": "Makery",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
