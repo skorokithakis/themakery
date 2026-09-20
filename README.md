@@ -23,9 +23,11 @@ repository because it cost money to produce.
 committed file is exactly the published file. For each author with at least one project it
 writes `content/makers/<author_id>/index.md`. Author names are read from the archive
 database at import time, not from the JSON, so a renamed member is current on the next
-import. The importer deletes and regenerates everything under those two directories, so a
-project the extractor dropped disappears from the site, and running it twice with no
-upstream change produces no diff.
+import. Whether an image has bytes is read from the archive for the same reason: an
+attachment the archiver recovers later reaches the site on the next import, without
+running the extractor again. The importer deletes and regenerates everything under those
+two directories, so a project the extractor dropped disappears from the site, and running
+it twice with no upstream change produces no diff.
 
 Project URLs come from the slug the model chose, falling back to the title for older write-ups,
 and change when a write-up is regenerated, while maker URLs use the Discord id.

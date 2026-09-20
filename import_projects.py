@@ -68,16 +68,16 @@ def author_name(connection: sqlite3.Connection, author_id: str) -> str:
     return str(row[1]) or str(row[0])
 
 
-def attachment_data(connection: sqlite3.Connection, attachment_id: str) -> bytes:
-    """Return the stored bytes for an attachment named by extracted project data."""
+def attachment_data(connection: sqlite3.Connection, attachment_id: str) -> bytes | None:
+    """Return stored attachment bytes, or None when the archive skipped the file."""
 
     row = connection.execute(
         "SELECT data FROM attachments WHERE id = ?", (attachment_id,)
     ).fetchone()
-    if row is None or row[0] is None:
-        raise ValueError(
-            f"Attachment {attachment_id} has no stored data in the archive."
-        )
+    if row is None:
+        raise ValueError(f"Attachment {attachment_id} is not present in the archive.")
+    if row[0] is None:
+        return None
     return bytes(row[0])
 
 
@@ -98,15 +98,16 @@ def image_file_names(
     names: list[str] = []
     for attachment in attachments:
         file_name = str(attachment["file_name"])
-        if (
-            not bool(attachment["stored"])
-            or Path(file_name).suffix.lower() not in IMAGE_SUFFIXES
-        ):
+        if Path(file_name).suffix.lower() not in IMAGE_SUFFIXES:
             continue
 
         attachment_id = str(attachment["id"])
         name = f"{attachment_id}.jpg"
         data = attachment_data(connection, attachment_id)
+        # An archived row with no bytes is ordinary, not a fault: the archiver skips a
+        # file over its size ceiling and records why. The page is published without it.
+        if data is None:
+            continue
         write_image(data, bundle / name, 1600)
         if not names:
             write_image(data, bundle / f"{attachment_id}.thumb.jpg", 480)
