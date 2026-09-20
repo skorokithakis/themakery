@@ -23,6 +23,11 @@ SLUG_SEPARATOR = re.compile(r"[^a-z0-9]+")
 PROJECTS_DIRECTORY = Path("content/projects")
 MAKERS_DIRECTORY = Path("content/makers")
 
+# The project card box is 4:3 (.project-card-image in static/style.css), so card thumbnails
+# are centre-cropped to that ratio. Regenerate the committed thumbnails if the CSS aspect
+# ratio changes.
+CARD_THUMBNAIL_SIZE = (800, 600)
+
 
 def connect_readonly(path: Path) -> sqlite3.Connection:
     """Open the archive read-only, because the importer must not alter synced data.
@@ -90,6 +95,26 @@ def write_image(data: bytes, destination: Path, maximum_size: int) -> None:
     image.save(destination, "JPEG", quality=85)
 
 
+def write_thumbnail(data: bytes, destination: Path) -> None:
+    """Write a 4:3 centre-cropped RGB JPEG that fits CARD_THUMBNAIL_SIZE without enlarging."""
+
+    with Image.open(BytesIO(data)) as source:
+        image = ImageOps.exif_transpose(source).convert("RGB")
+    width, height = image.size
+    if width * 3 > height * 4:
+        # Wider than 4:3, so the centre crop is limited by the source height.
+        crop_height = min(height, CARD_THUMBNAIL_SIZE[1])
+        target = (crop_height * 4 // 3, crop_height)
+    else:
+        # Taller than 4:3, so the centre crop is limited by the source width.
+        crop_width = min(width, CARD_THUMBNAIL_SIZE[0])
+        target = (crop_width, max(crop_width * 3 // 4, 1))
+    # ImageOps.fit enlarges to fill the requested size, so the target is reduced here to
+    # what the source can actually fill.
+    image = ImageOps.fit(image, target, Image.Resampling.LANCZOS)
+    image.save(destination, "JPEG", quality=85)
+
+
 def image_file_names(
     connection: sqlite3.Connection, attachments: list[dict[str, object]], bundle: Path
 ) -> list[str]:
@@ -110,7 +135,7 @@ def image_file_names(
             continue
         write_image(data, bundle / name, 1600)
         if not names:
-            write_image(data, bundle / f"{attachment_id}.thumb.jpg", 480)
+            write_thumbnail(data, bundle / f"{attachment_id}.thumb.jpg")
         names.append(name)
     return names
 
