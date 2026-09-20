@@ -23,7 +23,7 @@ SLUG_SEPARATOR = re.compile(r"[^a-z0-9]+")
 PROJECTS_DIRECTORY = Path("content/projects")
 MAKERS_DIRECTORY = Path("content/makers")
 
-# The project card box is 4:3 (.project-card-image in static/style.css), so card thumbnails
+# The project card box is 4:3 (.project-card-image in static/assets/style.css), so card thumbnails
 # are centre-cropped to that ratio. Regenerate the committed thumbnails if the CSS aspect
 # ratio changes.
 CARD_THUMBNAIL_SIZE = (800, 600)

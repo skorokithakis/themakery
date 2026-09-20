@@ -1,4 +1,16 @@
 #!/bin/sh
 set -eu
 
-exec zola serve --interface 0.0.0.0 --port 8000
+# Serves the real build output, so QA sees the content-hashed /assets/ filenames.
+#
+# This deliberately does not use `zola serve`. That keeps the HTML in memory and never
+# writes it to public/, so cachebust.py has nothing to rewrite and QA would only ever see
+# the plain /assets/style.css paths. Build first, then serve the finished files.
+#
+# There is no live reload: restart this after a change.
+#
+# The /assets/* immutable header in static/_headers is NOT applied here, because a plain
+# file server ignores it. To check the headers too, use: npx wrangler pages dev public
+
+./build
+exec python3 -m http.server 8000 --bind 0.0.0.0 --directory public

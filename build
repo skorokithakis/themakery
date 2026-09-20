@@ -1,4 +1,5 @@
 #!/bin/sh
 set -eu
 
-exec zola build
+zola build
+exec python3 cachebust.py

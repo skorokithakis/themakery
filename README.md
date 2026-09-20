@@ -73,6 +73,13 @@ Configure the Git-integrated Cloudflare Pages project with:
 - Build output directory: `public`
 - Environment variable: `ZOLA_VERSION=0.23.6`
 
+`./build` runs `zola build` and then `cachebust.py`, which renames every file in
+`public/assets/` to include a short content hash and rewrites the built HTML to match.
+Hashing happens at build time only: the templates keep plain `/assets/` paths, so `zola serve`
+still serves the site correctly in development. `static/_headers` gives the hashed files a
+one-year immutable cache lifetime, which is safe because a returning visitor's HTML is always
+revalidated and so always points at the current filenames.
+
 Cloudflare keeps serving the previous successful deployment when a new deployment fails. If
 the old static page remains after a push, check that the deployment for the latest commit ran
 with these settings and that the custom domain is attached to this Pages project.

@@ -1,0 +1,9 @@
+# Safe only because cachebust.py gives everything under /assets/ a content-hashed name.
+# Never serve an unhashed file from this prefix.
+#
+# Before this existed, the zone served CSS as "max-age=14400, must-revalidate". That 4 hour
+# value looks like the Cloudflare zone "Browser Cache TTL" setting, which can override what
+# this file asks for. If assets are not coming back as immutable, set that zone setting to
+# "Respect Existing Headers" in the dashboard.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
