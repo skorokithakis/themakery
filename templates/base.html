@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}The Makery{% endblock title %}</title>
+
+    <link rel="icon" type="image/png" href="/images/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/images/favicon/favicon.svg">
+    <link rel="shortcut icon" href="/images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="The Makery">
+    <link rel="manifest" href="/images/favicon/site.webmanifest">
+
+    <link rel="stylesheet" href="/style.css">
+    <script src="/subscription.js" defer></script>
+    {% block meta %}{% endblock meta %}
+</head>
+<body>
+    <div class="site-shell">
+        <header class="site-header">
+            <a class="site-brand" href="/">
+                <img src="/images/favicon/favicon.svg" alt="" width="28" height="28">
+                <span>The Makery</span>
+            </a>
+            <nav class="site-navigation" aria-label="Primary navigation">
+                <a href="/">Projects</a>
+                <a href="/makers/">Makers</a>
+                <a href="/newsletter/">Newsletter</a>
+            </nav>
+        </header>
+
+        <main class="site-main">
+            {% block content %}{% endblock content %}
+        </main>
+
+        <footer class="site-footer">
+            <div class="site-footer-content">
+                <section class="footer-newsletter" aria-labelledby="footer-newsletter-heading">
+                    <p class="eyebrow" id="footer-newsletter-heading">Newsletter</p>
+                    <p>Every so often, we send a newsletter with links to all the general maker interest projects and sites that we discussed on the server.<br>Subscribe to receive it.</p>
+                    <form method="post" action="https://listmonk.home.stavros.io/subscription/form" class="subscription-form subscription-form--footer" data-subscription-form>
+                        <label class="visually-hidden" for="footer-email">Email address</label>
+                        <input type="hidden" name="nonce">
+                        <input type="hidden" name="l" value="9d008ac8-09f9-4bee-a887-c80485a901ca">
+                        <div class="subscription-fields">
+                            <input type="email" name="email" id="footer-email" required autocomplete="email" placeholder="E-mail">
+                            <button type="submit">Subscribe</button>
+                        </div>
+                        <p class="subscription-status" data-subscription-status role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+                <div class="footer-bottom">
+                    <span>© 2026 The Makery</span>
+                    <span>Just makin' things.</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

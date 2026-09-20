@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Newsletter | The Makery{% endblock title %}
+
+{% block content %}
+<section class="newsletter-hero">
+    <p class="hero-label">The Makery<br>Newsletter</p>
+    <div class="newsletter-copy">
+        <h1>Subscribe.</h1>
+        <p>Every so often, we send a newsletter with links to all the general maker interest projects and sites that we discussed on the server.<br>Subscribe to receive it.</p>
+        <form method="post" action="https://listmonk.home.stavros.io/subscription/form" class="subscription-form subscription-form--page" data-subscription-form>
+            <label class="visually-hidden" for="newsletter-email">Email address</label>
+            <input type="hidden" name="nonce">
+            <input type="hidden" name="l" value="9d008ac8-09f9-4bee-a887-c80485a901ca">
+            <div class="subscription-fields">
+                <input type="email" name="email" id="newsletter-email" required autocomplete="email" placeholder="E-mail">
+                <button type="submit">Subscribe</button>
+            </div>
+            <p class="subscription-status" data-subscription-status role="status" aria-live="polite"></p>
+        </form>
+    </div>
+    <div class="hero-artwork hero-artwork--newsletter" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</section>
+{% endblock content %}

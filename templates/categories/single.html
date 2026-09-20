@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}{{ term.name }} | The Makery{% endblock title %}
+
+{% block content %}
+{% set categories = get_taxonomy(kind="categories") %}
+{% set projects = get_section(path="projects/_index.md") %}
+<section class="project-browser">
+    <div class="project-browser-heading">
+        <p class="eyebrow">Category</p>
+        <h1>{{ term.name }}</h1>
+    </div>
+    <nav class="project-filters" aria-label="Project categories">
+        <p class="project-filter-label">Filter</p>
+        <div class="project-filter-links">
+            <a href="/">All <span>{{ projects.pages | length }}</span></a>
+            {% for category in categories.items %}
+            <a{% if category.path == term.path %} class="is-active"{% endif %} href="{{ category.path }}">{{ category.name }} <span>{{ category.page_count }}</span></a>
+            {% endfor %}
+        </div>
+    </nav>
+    <div class="project-grid">
+    {% for project in term.pages %}
+        {% include "components/project-card.html" %}
+    {% endfor %}
+    </div>
+</section>
+{% endblock content %}

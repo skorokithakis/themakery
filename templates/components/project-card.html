@@ -1,0 +1,24 @@
+{% set all_projects = get_section(path="projects/_index.md") %}
+{% for global_project in all_projects.pages | reverse %}
+    {% if global_project.path == project.path %}
+    {% set maker_source_path = "makers/" ~ project.extra.author_id ~ "/index.md" %}
+    {% set maker = get_page(path=maker_source_path) %}
+    <article class="project-card">
+        <a class="project-card-image" href="{{ project.path }}" aria-label="View {{ project.title }}">
+            {% if project.extra.hero is defined %}
+            <img src="{{ project.path }}{{ project.extra.thumb }}" alt="" loading="lazy">
+            {% else %}
+            <span class="project-card-placeholder" aria-hidden="true"></span>
+            {% endif %}
+        </a>
+        <div class="project-card-content">
+            <p class="project-ordinal">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</p>
+            <div class="project-card-copy">
+                <h2><a href="{{ project.path }}">{{ project.title }}</a></h2>
+                <p class="project-card-summary">{{ project.description }}</p>
+            </div>
+            <p class="project-card-meta"><a href="{{ maker.path }}">{{ project.extra.author_name }}</a><br><time datetime="{{ project.date }}">{{ project.date | date(format="%d.%m.%y") }}</time></p>
+        </div>
+    </article>
+    {% endif %}
+{% endfor %}

@@ -1,0 +1,3 @@
+base_url = "https://www.themakery.cc"
+compile_sass = false
+taxonomies = [{ name = "categories", feed = false }]

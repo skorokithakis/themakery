@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} | The Makery{% endblock title %}
+
+{% block meta %}
+{% if page.extra.images | length > 0 %}
+<script src="/project-lightbox.js" defer></script>
+{% endif %}
+{% endblock meta %}
+
+{% block content %}
+{% set maker_source_path = "makers/" ~ page.extra.author_id ~ "/index.md" %}
+{% set maker = get_page(path=maker_source_path) %}
+{% set projects = get_section(path="projects/_index.md") %}
+{% set categories = get_taxonomy(kind="categories") %}
+<article class="project-detail">
+    <div class="project-detail-top">
+        <a class="project-back-link" href="/">← All projects</a>
+        <p class="project-detail-count">
+        {% for project in projects.pages | reverse %}
+            {% if project.path == page.path %}
+            {{ loop.index }} / {{ projects.pages | length }}
+            {% endif %}
+        {% endfor %}
+        </p>
+    </div>
+    <section class="project-detail-header">
+        <aside class="project-sidebar" aria-label="Project details">
+            <dl class="project-facts">
+                <div>
+                    <dt>Maker</dt>
+                    <dd><a href="{{ maker.path }}">{{ page.extra.author_name }}</a></dd>
+                </div>
+                {% if page.date %}
+                <div>
+                    <dt>Date</dt>
+                    <dd><time datetime="{{ page.date }}">{{ page.date | date(format="%-d %B %Y") }}</time></dd>
+                </div>
+                {% endif %}
+                {% if page.taxonomies.categories is defined and page.taxonomies.categories | length > 0 %}
+                {% set category = page.taxonomies.categories[0] %}
+                <div>
+                    <dt>Category</dt>
+                    {% for taxonomy_category in categories.items %}
+                    {% if taxonomy_category.name == category %}
+                    <dd><a href="{{ taxonomy_category.path }}">{{ category }}</a></dd>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </dl>
+        </aside>
+        <header class="project-detail-intro">
+            <h1>{{ page.title }}</h1>
+            <p class="project-detail-summary">{{ page.description }}</p>
+        </header>
+    </section>
+    {% if page.extra.images | length > 0 %}
+    {% for image in page.extra.images %}
+        {% if loop.first %}
+        <div class="project-hero-image">
+            <a class="project-image-link" href="{{ page.path }}{{ image }}">
+                <img src="{{ page.path }}{{ image }}" alt="">
+                <span class="visually-hidden">View full-size image</span>
+            </a>
+        </div>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% if page.content %}
+    <section class="project-description">
+        <p class="project-section-label">Description</p>
+        <div class="project-content">{{ page.content | safe }}</div>
+    </section>
+    {% endif %}
+    {% if page.extra.images | length > 1 %}
+    <section class="project-gallery">
+        <div class="project-gallery-heading">
+            <p class="project-section-label">Gallery</p>
+            <p>{{ page.extra.images | length - 1 }} images</p>
+        </div>
+        <div class="project-images">
+            {% for image in page.extra.images %}
+                {% if not loop.first %}
+                <a class="project-image-link" href="{{ page.path }}{{ image }}">
+                    <img src="{{ page.path }}{{ image }}" alt="" loading="lazy">
+                    <span class="visually-hidden">View full-size image</span>
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+    {% if page.lower or page.higher %}
+    <nav class="project-navigation" aria-label="Adjacent projects">
+        {% if page.lower %}
+        <a class="project-navigation-newer" href="{{ page.lower.path }}"><span>Newer project</span>{{ page.lower.title }}</a>
+        {% endif %}
+        {% if page.higher %}
+        <a class="project-navigation-older" href="{{ page.higher.path }}"><span>Older project</span>{{ page.higher.title }}</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+</article>
+{% if page.extra.images | length > 0 %}
+<dialog class="project-lightbox" aria-label="Full-size project image">
+    <div class="project-lightbox-content">
+        <div class="project-lightbox-controls">
+            <button class="project-lightbox-close" type="button">Close</button>
+        </div>
+        <div class="project-lightbox-stage">
+            <img class="project-lightbox-image" src="" alt="">
+        </div>
+    </div>
+</dialog>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block meta %}
+    <meta property="og:title" content="The Makery">
+    <meta property="og:description" content="A community of makers.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ get_url(path="images/favicon/favicon-96x96.png") }}">
+{% endblock meta %}
+
+{% block content %}
+{% set projects = get_section(path="projects/_index.md") %}
+{% set categories = get_taxonomy(kind="categories") %}
+<section class="home-hero">
+    <p class="hero-label">The Makery</p>
+    <div class="hero-copy">
+        <h1>Things we made</h1>
+        <p class="tagline">A community for people who make things and share how they made them.</p>
+        <p class="hero-stat">{{ projects.pages | length }} projects</p>
+    </div>
+    <div class="hero-artwork" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</section>
+
+<section class="project-browser" aria-labelledby="projects-heading">
+    <div class="project-browser-heading">
+        <h2 class="visually-hidden" id="projects-heading">All projects</h2>
+    </div>
+    <nav class="project-filters" aria-label="Project categories">
+        <p class="project-filter-label">Filter</p>
+        <div class="project-filter-links">
+            <a class="is-active" href="/">All <span>{{ projects.pages | length }}</span></a>
+            {% for category in categories.items %}
+            <a href="{{ category.path }}">{{ category.name }} <span>{{ category.page_count }}</span></a>
+            {% endfor %}
+        </div>
+    </nav>
+    <div class="project-grid">
+        {% for project in projects.pages %}
+        {% include "components/project-card.html" %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}

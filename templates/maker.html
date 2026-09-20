@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} | The Makery{% endblock title %}
+
+{% block content %}
+{% set projects = get_section(path="projects/_index.md") %}
+<section class="project-browser">
+    <div class="project-browser-heading">
+        <p class="eyebrow">Maker</p>
+        <h1>{{ page.title }}</h1>
+    </div>
+    <div class="project-grid">
+    {% for project in projects.pages %}
+        {% if project.extra.author_id == page.extra.author_id %}
+        {% include "components/project-card.html" %}
+        {% endif %}
+    {% endfor %}
+    </div>
+</section>
+{% endblock content %}

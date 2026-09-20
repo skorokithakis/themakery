@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Makers | The Makery{% endblock title %}
+
+{% block content %}
+<section class="directory-page">
+    <div class="directory-heading">
+        <p class="eyebrow">The community</p>
+        <h1>Makers</h1>
+    </div>
+    <ul class="directory-list">
+    {% for maker in section.pages %}
+    <li><a href="{{ maker.path }}">{{ maker.title }}</a><span>Maker</span></li>
+    {% endfor %}
+</ul>
+</section>
+{% endblock content %}

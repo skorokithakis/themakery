@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Projects | The Makery{% endblock title %}
+
+{% block content %}
+<section class="project-browser">
+    <div class="project-browser-heading">
+        <p class="eyebrow">Browse projects</p>
+        <h1>All projects</h1>
+    </div>
+    <div class="project-grid">
+    {% for project in section.pages %}
+        {% include "components/project-card.html" %}
+    {% endfor %}
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Categories | The Makery{% endblock title %}
+
+{% block content %}
+<section class="directory-page">
+    <div class="directory-heading">
+        <p class="eyebrow">Browse projects</p>
+        <h1>Categories</h1>
+    </div>
+    <ul class="directory-list">
+    {% for term in terms %}
+    <li><a href="{{ term.path }}">{{ term.name }}</a><span>{{ term.page_count }} projects</span></li>
+    {% endfor %}
+</ul>
+</section>
+{% endblock content %}
