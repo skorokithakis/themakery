@@ -853,6 +853,7 @@ h3 {
 }
 
 .project-lightbox-stage {
+    position: relative;
     display: grid;
     min-width: 0;
     min-height: 0;
@@ -871,7 +872,9 @@ h3 {
     object-fit: contain;
 }
 
-.project-lightbox-close {
+.project-lightbox-close,
+.project-lightbox-previous,
+.project-lightbox-next {
     min-width: 44px;
     min-height: 44px;
     border: 0;
@@ -881,6 +884,21 @@ h3 {
     font: inherit;
     font-weight: 700;
     cursor: pointer;
+}
+
+.project-lightbox-previous,
+.project-lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.project-lightbox-previous {
+    left: 0;
+}
+
+.project-lightbox-next {
+    right: 0;
 }
 
 .project-navigation {
