@@ -476,6 +476,10 @@ h3 {
 
 .project-card {
     min-width: 0;
+    padding-top: 16px;
+    /* Lighter than the 1px section dividers so a row of cards reads as a
+       sub-division of the section, not a new section. */
+    border-top: 1px solid rgb(43 52 53 / 35%);
 }
 
 .project-card-image {
@@ -509,8 +513,6 @@ h3 {
     grid-template-columns: 36px minmax(0, 1fr) auto;
     gap: 12px;
     margin-top: 14px;
-    padding-top: 12px;
-    border-top: 1px solid #2b3435;
 }
 
 .project-card-copy {
