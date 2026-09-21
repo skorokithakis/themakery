@@ -2,7 +2,7 @@
 title = "A macropad layer that types quotes at the press of a button"
 date = "2026-01-02"
 description = "I absolutely love my macropad, so I built a dedicated layer on it that types out a set of ridiculous quotes at the press of a single button. It has been so much fun that I decided to get some PCBs made and send them around to other people, with a reset button and a physical on/off switch on the board and sockets as an optional extra. Anyone building one will need MX switches, keycaps, and a nice!nano clone of their own."
-path = "projects/e69tc4/quote-macropad-layer"
+path = "projects/e69tc4/a-macropad-layer-that-types-quotes-at-the-press-of-a-button"
 [taxonomies]
 categories = ["Electronics"]
 [extra]

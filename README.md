@@ -30,10 +30,9 @@ two directories, so a project the extractor dropped disappears from the site, an
 it twice with no upstream change produces no diff.
 
 A project URL is `/projects/<code>/<slug>/`. The code is six Crockford base32 characters
-hashed from the thread id, so it never changes. The slug comes from the slug the model chose,
-falling back to the title for older write-ups, and may change when a write-up is regenerated.
-The code exists so the slug can later become decoration that any value of resolves to the same
-project. Maker URLs use the Discord id.
+hashed from the thread id, so it never changes. The slug is derived from the project's title,
+so it may change when a write-up is regenerated. The code exists so the slug can later become
+decoration that any value of resolves to the same project. Maker URLs use the Discord id.
 
 A project with `include` set to `false` is not imported. Projects with a category are listed
 under that category's taxonomy page. Projects without a category remain in the all-projects

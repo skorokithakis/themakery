@@ -2,7 +2,7 @@
 title = "WiFi-driven analog clock with a sweep movement"
 date = "2026-02-10"
 description = "I wanted to convert a cheap analog clock so its hands are driven over WiFi, inspired by an ESP8266 analog clock project and the ventinari-clock project. My first attempt seemed to fail: the second hand crawled round in tiny steps instead of ticking, and after many long hours I gave up and assumed I had ruined the movement. Buying a second clock and putting a battery in it first showed me the real problem, because the thing sweeps rather than ticks. I pulled the old clock's circuit back out of the bin, measured it with an oscilloscope, and replicated the pulse pattern in firmware."
-path = "projects/1szqgh/wifi-analog-clock-conversion"
+path = "projects/1szqgh/wifi-driven-analog-clock-with-a-sweep-movement"
 [taxonomies]
 categories = ["Electronics"]
 [extra]

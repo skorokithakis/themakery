@@ -2,7 +2,7 @@
 title = "AI-designed press-fit enclosure for a presence sensor"
 date = "2026-09-12"
 description = "I had GPT 6 Astra design a small box for a presence sensor I'm building, describing what I wanted in a few messages rather than writing any code or touching CAD myself. The first thing it generated worked: press-fit, with the ESP, the sensor and the lid all fitting together perfectly. I did a few iterations later to change things, and after those it fits perfectly."
-path = "projects/91fj4q/presence-sensor-press-fit-enclosure"
+path = "projects/91fj4q/ai-designed-press-fit-enclosure-for-a-presence-sensor"
 [taxonomies]
 categories = ["Making and fabrication"]
 [extra]

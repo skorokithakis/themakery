@@ -2,7 +2,7 @@
 title = "Nicolas' big head"
 date = "2026-09-21"
 description = "I scanned my own head with a phone app, reshaped the scan into an egg in Blender, scaled it up and 3D printed it. The result is a big printed egg version of my head, which also happens to act as a bathroom companion."
-path = "projects/jk20sg/scanned-head-egg-3d-print"
+path = "projects/jk20sg/nicolas-big-head"
 [taxonomies]
 categories = ["Making and fabrication"]
 [extra]

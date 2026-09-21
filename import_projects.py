@@ -314,11 +314,7 @@ def main(args: argparse.Namespace) -> None:
         if code in used_short_ids:
             code = short_id(thread_id, SHORT_ID_LENGTH + 1)
         used_short_ids.add(code)
-        # Old write-ups predate model slugs, and regenerating them costs money, so their
-        # existing titles remain the fallback URL source. The slug is decoration; the code
-        # before it is what identifies the project.
-        slug_source = str(project.get("slug") or project["title"])
-        page_path = f"projects/{code}/{slug(slug_source) or thread_id}"
+        page_path = f"projects/{code}/{slug(project['title']) or thread_id}"
         author_id, name, image_count = write_project(
             connection, project, PROJECTS_DIRECTORY, page_path
         )
