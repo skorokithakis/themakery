@@ -35,6 +35,9 @@ output, run `.symphony/serve`, which builds and serves `public/` on port 8000.
   lightbox is hand-written on `<dialog>` for that reason.
 * Card thumbnails are centre-cropped to 4:3 in the importer to match
   `.project-card-image` in `static/assets/style.css`. Change both or neither.
+* `extra.hero` and `extra.thumb` identify the hero image and its card thumbnail. The
+  optional JSON `hero` attachment id selects both; an absent or unrendered attachment
+  falls back to the first rendered image.
 * Raw HTML in a write-up is escaped before it reaches Markdown, because Zola passes HTML
   through unchanged.
 * Image captions are a parallel list in front matter (`extra.captions` beside

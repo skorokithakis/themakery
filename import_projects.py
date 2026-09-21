@@ -146,12 +146,16 @@ def write_thumbnail(data: bytes, destination: Path) -> None:
 
 
 def image_file_names(
-    connection: sqlite3.Connection, attachments: list[dict[str, object]], bundle: Path
-) -> tuple[list[str], list[str]]:
-    """Write eligible images and return their names and captions in extraction order."""
+    connection: sqlite3.Connection,
+    attachments: list[dict[str, object]],
+    hero_attachment_id: str | None,
+    bundle: Path,
+) -> tuple[list[str], list[str], str | None]:
+    """Write eligible images and return their names, captions and selected hero."""
 
     names: list[str] = []
     captions: list[str] = []
+    data_by_name: dict[str, bytes] = {}
     for attachment in attachments:
         file_name = str(attachment["file_name"])
         if Path(file_name).suffix.lower() not in IMAGE_SUFFIXES:
@@ -165,11 +169,19 @@ def image_file_names(
         if data is None:
             continue
         write_image(data, bundle / name, 1600)
-        if not names:
-            write_thumbnail(data, bundle / f"{attachment_id}.thumb.jpg")
+        data_by_name[name] = data
         names.append(name)
         captions.append(str(attachment.get("caption", "")))
-    return names, captions
+    if not names:
+        return names, captions, None
+    hero = f"{hero_attachment_id}.jpg"
+    if hero not in names:
+        hero = names[0]
+    write_thumbnail(
+        data_by_name[hero],
+        bundle / f"{hero.removesuffix('.jpg')}.thumb.jpg",
+    )
+    return names, captions, hero
 
 
 def project_front_matter(
@@ -178,6 +190,7 @@ def project_front_matter(
     name: str,
     images: list[str],
     captions: list[str],
+    hero: str | None,
     page_path: str,
 ) -> str:
     """Render the exact front matter contract shared by the project templates."""
@@ -205,11 +218,11 @@ def project_front_matter(
             f"author_name = {toml_string(name)}",
         )
     )
-    if images:
+    if hero:
         fields.extend(
             (
-                f"hero = {toml_string(images[0])}",
-                f"thumb = {toml_string(images[0].removesuffix('.jpg') + '.thumb.jpg')}",
+                f"hero = {toml_string(hero)}",
+                f"thumb = {toml_string(hero.removesuffix('.jpg') + '.thumb.jpg')}",
             )
         )
     fields.extend(
@@ -237,14 +250,17 @@ def write_project(
     name = author_name(connection, author_id)
     bundle = projects_directory / thread_id
     bundle.mkdir()
-    images, captions = image_file_names(
-        connection, list(project["attachments"]), bundle
+    hero_attachment_id = str(project["hero"]) if "hero" in project else None
+    images, captions, hero = image_file_names(
+        connection, list(project["attachments"]), hero_attachment_id, bundle
     )
     # Discord text can carry raw HTML, and Zola's markdown passes raw HTML through, so it
     # is neutralised here rather than in the template.
     description = html.escape(str(project["description"]), quote=False)
     index = (
-        project_front_matter(project, author_id, name, images, captions, page_path)
+        project_front_matter(
+            project, author_id, name, images, captions, hero, page_path
+        )
         + description
     )
     (bundle / "index.md").write_text(index, encoding="utf-8")

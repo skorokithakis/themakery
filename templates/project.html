@@ -55,17 +55,13 @@
             <p class="project-detail-summary">{{ page.description }}</p>
         </header>
     </section>
-    {% if page.extra.images | length > 0 %}
-    {% for image in page.extra.images %}
-        {% if loop.first %}
-        <div class="project-hero-image" data-lightbox-group>
-            <a class="project-image-link" href="{{ page.path }}{{ image }}">
-                <img src="{{ page.path }}{{ image }}" alt="">
-                <span class="visually-hidden">View full-size image</span>
-            </a>
-        </div>
-        {% endif %}
-    {% endfor %}
+    {% if page.extra.hero is defined %}
+    <div class="project-hero-image" data-lightbox-group>
+        <a class="project-image-link" href="{{ page.path }}{{ page.extra.hero }}">
+            <img src="{{ page.path }}{{ page.extra.hero }}" alt="">
+            <span class="visually-hidden">View full-size image</span>
+        </a>
+    </div>
     {% endif %}
     {% if page.content %}
     <section class="project-description">
@@ -73,7 +69,7 @@
         <div class="project-content">{{ page.content | safe }}</div>
     </section>
     {% endif %}
-    {# The first image appears twice on purpose: cropped as the decorative hero
+    {# The hero image appears twice on purpose: cropped as the decorative hero
        above, and again here, because the gallery is the full documentation set. #}
     {% if page.extra.images | length > 0 %}
     <section class="project-gallery">
