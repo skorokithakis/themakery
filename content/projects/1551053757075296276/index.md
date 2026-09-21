@@ -2,7 +2,7 @@
 title = "The Makery projects website"
 date = "2026-09-20"
 description = "I built a projects website for the Makery that is generated automatically from our Discord. I collect all the Discord messages in a database and use them both for the newsletter and for this site. The site looks at all the threads, and only threads, works out which ones are about a project, collects the text and images, and turns each one into a project page. It gives me somewhere to point people to for all the cool stuff we do here, since I like telling people about what I am building but cannot always find the time to do a proper writeup."
-slug = "makery-discord-projects-website"
+path = "projects/sw1zha/makery-discord-projects-website"
 [taxonomies]
 categories = ["Software"]
 [extra]

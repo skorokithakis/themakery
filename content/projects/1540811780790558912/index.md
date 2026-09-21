@@ -2,7 +2,7 @@
 title = "Sky Team board game PCB"
 date = "2026-08-22"
 description = "A PCB project built around the cooperative board game Sky Team, with switches and LEDs standing in for the cockpit controls. The first job is working out how everything connects: some of the LEDs come on with the switch next to them, so those might be wired with the switch in series, while other LEDs act as counters. The software comes much later, once the game has been played enough to know what is actually needed."
-slug = "sky-team-board-game-pcb"
+path = "projects/ve28xq/sky-team-board-game-pcb"
 [taxonomies]
 categories = ["Electronics"]
 [extra]

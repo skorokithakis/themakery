@@ -29,8 +29,11 @@ running the extractor again. The importer deletes and regenerates everything und
 two directories, so a project the extractor dropped disappears from the site, and running
 it twice with no upstream change produces no diff.
 
-Project URLs come from the slug the model chose, falling back to the title for older write-ups,
-and change when a write-up is regenerated, while maker URLs use the Discord id.
+A project URL is `/projects/<code>/<slug>/`. The code is six Crockford base32 characters
+hashed from the thread id, so it never changes. The slug comes from the slug the model chose,
+falling back to the title for older write-ups, and may change when a write-up is regenerated.
+The code exists so the slug can later become decoration that any value of resolves to the same
+project. Maker URLs use the Discord id.
 
 A project with `include` set to `false` is not imported. Projects with a category are listed
 under that category's taxonomy page. Projects without a category remain in the all-projects
@@ -43,7 +46,7 @@ index and their maker page, but do not appear in a category filter or taxonomy p
 - `/categories/<category>/` lists projects in that category. Only categories present in imported
   project data have a page.
 - `/makers/` lists makers; `/makers/<discord-id>/` lists each maker's imported projects.
-- Each project has its generated slug URL, with its write-up, images, maker and category links,
+- `/projects/<code>/<slug>/` is a project, with its write-up, images, maker and category links,
   and adjacent projects in date order without wrapping from either end.
 - `/newsletter/` contains the newsletter subscription form.
 

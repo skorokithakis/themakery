@@ -2,7 +2,7 @@
 title = "Nicolas' big head"
 date = "2026-09-21"
 description = "I scanned my own head with the Heges app on an iPhone, which uses the FaceID camera, then turned the scan into an egg shape, scaled it up and 3D printed it. The result is a big printed version of my head that also acts as a bathroom companion."
-slug = "scanned-head-egg-print"
+path = "projects/jk20sg/scanned-head-egg-print"
 [taxonomies]
 categories = ["Making and fabrication"]
 [extra]

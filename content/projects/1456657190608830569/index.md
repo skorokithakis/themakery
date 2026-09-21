@@ -2,7 +2,7 @@
 title = "Compact two-board PCB stack"
 date = "2026-01-02"
 description = "I designed a PCB around a schematic I'd already drawn up, with the goal of keeping the whole thing as compact as possible. Laying it out turned out to be the hard part: the board is dense enough that routing became a real fight, and I ended up splitting the design across two PCBs connected by headers, using the vertical space I had available. After wrestling with the routing on the second board, I found a solution and planned to finish routing and order a few."
-slug = "compact-two-board-pcb-stack"
+path = "projects/pbtj45/compact-two-board-pcb-stack"
 [taxonomies]
 categories = ["Electronics"]
 [extra]

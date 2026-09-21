@@ -2,7 +2,7 @@
 title = "An Android digital assistant app with custom actions"
 date = "2026-09-20"
 description = "I built a digital assistant app for Android that registers itself as the system assistant, so long-pressing the power button pops it up and starts recording audio. You can add various actions to it, including adding calendar events and alarms, and anything it doesn't handle falls through to my own digital assistant, Stavrobot. It transcribes with the OpenAI or ElevenLabs API and uses OpenAI as a lightweight LLM to parse the actions, and if you're offline it keeps retrying everything until it works."
-slug = "android-digital-assistant-app"
+path = "projects/y651a1/android-digital-assistant-app"
 [taxonomies]
 categories = ["Software"]
 [extra]

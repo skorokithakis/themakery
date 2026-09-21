@@ -2,7 +2,7 @@
 title = "ESP32 voice recorder with automatic transfer and transcription"
 date = "2026-02-15"
 description = "A pocket voice recorder built around an ESP32 so I can take notes quickly. I press a button, it records audio, and when I'm near a PC it transfers the audio over Bluetooth and transcribes it automatically. Transcription happens on the computer rather than on the device, and startup is instant. The one part still fighting me is the power latching circuit: the MOSFET that is supposed to cut all the power doesn't."
-slug = "esp32-voice-recorder"
+path = "projects/64hweh/esp32-voice-recorder"
 [taxonomies]
 categories = ["Audio and music"]
 [extra]

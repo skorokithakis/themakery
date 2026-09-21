@@ -6,6 +6,7 @@
 """Turn extracted project JSON and the archive database into Zola page bundles."""
 
 import argparse
+import hashlib
 import html
 import json
 import re
@@ -26,6 +27,11 @@ MAKERS_DIRECTORY = Path("content/makers")
 # are centre-cropped to that ratio. Regenerate the committed thumbnails if the CSS aspect
 # ratio changes.
 CARD_THUMBNAIL_SIZE = (800, 600)
+
+# Crockford base32, lowercased: no i, l, o or u, so a code cannot be misread and stays
+# safe if something lowercases the URL. Base58 was rejected for being case sensitive.
+SHORT_ID_ALPHABET = "0123456789abcdefghjkmnpqrstvwxyz"
+SHORT_ID_LENGTH = 6
 
 
 def connect_readonly(path: Path) -> sqlite3.Connection:
@@ -59,6 +65,31 @@ def slug(title: str) -> str:
     normalised = unicodedata.normalize("NFKD", title.lower())
     ascii_title = normalised.encode("ascii", "ignore").decode("ascii")
     return SLUG_SEPARATOR.sub("-", ascii_title).strip("-")
+
+
+def short_id(thread_id: str, length: int = SHORT_ID_LENGTH) -> str:
+    """Return the stable short URL component identifying a project.
+
+    Every published project URL contains this code, so the alphabet, the length and the
+    hash are a permanent contract: change any of them and every link to the site dies.
+
+    The code hashes the whole snowflake rather than truncating it. A snowflake's low bits
+    are worker, process and increment, and this archive comes from a handful of shards
+    with low increments, so the tail of the number barely varies between projects. The
+    timestamp is the part that separates them, and only a hash keeps it.
+
+    Six characters is 32**6, about a billion codes, so a thousand projects collide with
+    probability well under a percent.
+    """
+
+    value = int.from_bytes(
+        hashlib.sha256(thread_id.encode("utf-8")).digest()[:8], "big"
+    )
+    characters = []
+    for _ in range(length):
+        characters.append(SHORT_ID_ALPHABET[value % len(SHORT_ID_ALPHABET)])
+        value //= len(SHORT_ID_ALPHABET)
+    return "".join(reversed(characters))
 
 
 def author_name(connection: sqlite3.Connection, author_id: str) -> str:
@@ -144,7 +175,7 @@ def project_front_matter(
     author_id: str,
     name: str,
     images: list[str],
-    page_slug: str,
+    page_path: str,
 ) -> str:
     """Render the exact front matter contract shared by the project templates."""
 
@@ -153,7 +184,7 @@ def project_front_matter(
         f"title = {toml_string(str(project['title']))}",
         f"date = {toml_string(str(project['started_at'])[:10])}",
         f"description = {toml_string(str(project['summary']))}",
-        f"slug = {toml_string(page_slug)}",
+        f"path = {toml_string(page_path)}",
     ]
     if "category" in project:
         fields.extend(
@@ -192,7 +223,7 @@ def write_project(
     connection: sqlite3.Connection,
     project: dict[str, object],
     projects_directory: Path,
-    page_slug: str,
+    page_path: str,
 ) -> tuple[str, str, int]:
     """Write one project bundle; return the author's id and current name, and the image count."""
 
@@ -207,7 +238,7 @@ def write_project(
     # is neutralised here rather than in the template.
     description = html.escape(str(project["description"]), quote=False)
     index = (
-        project_front_matter(project, author_id, name, images, page_slug) + description
+        project_front_matter(project, author_id, name, images, page_path) + description
     )
     (bundle / "index.md").write_text(index, encoding="utf-8")
     return author_id, name, len(images)
@@ -268,26 +299,32 @@ def main(args: argparse.Namespace) -> None:
     clear_bundles(MAKERS_DIRECTORY)
 
     authors: dict[str, str] = {}
-    used_slugs: set[str] = set()
+    used_short_ids: set[str] = set()
     written = 0
     for project in projects:
         thread_id = str(project["thread_id"])
         if project.get("include") is False:
             print(f"excluded  {thread_id}  {project['title']}")
             continue
+        # Projects are sorted by thread id, which is chronological, so a colliding newer
+        # project takes the longer code and no already published URL moves. Deleting the
+        # older half of a collision would shorten the newer code and break its URL, which
+        # is accepted: it needs a collision and a deletion of the same pair.
+        code = short_id(thread_id)
+        if code in used_short_ids:
+            code = short_id(thread_id, SHORT_ID_LENGTH + 1)
+        used_short_ids.add(code)
         # Old write-ups predate model slugs, and regenerating them costs money, so their
-        # existing titles remain the fallback URL source.
+        # existing titles remain the fallback URL source. The slug is decoration; the code
+        # before it is what identifies the project.
         slug_source = str(project.get("slug") or project["title"])
-        page_slug = slug(slug_source) or thread_id
-        if page_slug in used_slugs:
-            page_slug = f"{page_slug}-{thread_id}"
-        used_slugs.add(page_slug)
+        page_path = f"projects/{code}/{slug(slug_source) or thread_id}"
         author_id, name, image_count = write_project(
-            connection, project, PROJECTS_DIRECTORY, page_slug
+            connection, project, PROJECTS_DIRECTORY, page_path
         )
         authors[author_id] = name
         written += 1
-        print(f"wrote     {thread_id}  /projects/{page_slug}/  {image_count} image(s)")
+        print(f"wrote     {thread_id}  /{page_path}/  {image_count} image(s)")
     connection.close()
 
     for author_id, name in authors.items():
