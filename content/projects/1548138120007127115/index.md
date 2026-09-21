@@ -13,6 +13,7 @@ author_name = "Stavros"
 hero = "1548138159638847588.jpg"
 thumb = "1548138159638847588.thumb.jpg"
 images = ["1548138159638847588.jpg", "1548138215981064382.jpg", "1548138250261241927.jpg", "1548138267889897522.jpg", "1548257025845366834.jpg", "1548257063816265738.jpg"]
+captions = ["", "", "", "", "", ""]
 +++
 I'm making a presence sensor, and I had GPT 6 Astra design a little box for it. I described what I wanted in a few messages and this was the first thing it generated, in SCAD. I didn't write a line of code or touch any CAD.
 

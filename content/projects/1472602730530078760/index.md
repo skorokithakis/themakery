@@ -11,6 +11,7 @@ channel = "ideas-and-feedback"
 author_id = "213433184409485312"
 author_name = "Stavros"
 images = []
+captions = []
 +++
 I started out wanting a Pi Pico based voice recorder, but I ended up using an ESP32 instead. The goal was simple: be able to take notes quickly without pulling my phone out. You press the button, it records audio, and when you're near a PC it transfers the audio and transcribes it automatically. Transcription happens on the computer, not on the device. Startup is instant, and it works really well.
 

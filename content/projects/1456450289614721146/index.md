@@ -11,6 +11,7 @@ channel = "makes"
 author_id = "213433184409485312"
 author_name = "Stavros"
 images = []
+captions = []
 +++
 My god I absolutely love this macropad. I made a whole layer on it dedicated to a collection of ridiculous quotes, so that each one gets typed out at the press of a button. Things like "nootropia type shit bro", "don't do dis shit, don't do dat, do dis, do dat", "failing to prepare is preparing to fail", and "exelixi bro, open the fuckin pita". This is so much fun, and I reckon everyone needs a macropad.
 

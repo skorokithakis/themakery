@@ -13,6 +13,7 @@ author_name = "Stavros"
 hero = "1551541582581207080.jpg"
 thumb = "1551541582581207080.thumb.jpg"
 images = ["1551541582581207080.jpg", "1551542148917370920.jpg", "1551542187622146128.jpg", "1551542202990071879.jpg", "1551644379805122591.jpg", "1551644475036672121.jpg"]
+captions = ["The presence sensor I made from an ESP32 and an LD2410.", "The first iteration of the box.", "The first iteration of the box, which is small and pretty nice looking.", "", "The circuit.", "The final enclosure."]
 +++
 I used an ESP32 and an LD2410 to make a presence sensor for the various rooms of my home. I flashed ESPHome firmware to the ESP32 and it worked out of the box.
 

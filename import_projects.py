@@ -147,10 +147,11 @@ def write_thumbnail(data: bytes, destination: Path) -> None:
 
 def image_file_names(
     connection: sqlite3.Connection, attachments: list[dict[str, object]], bundle: Path
-) -> list[str]:
-    """Write eligible attachment images in extraction order and return their output names."""
+) -> tuple[list[str], list[str]]:
+    """Write eligible images and return their names and captions in extraction order."""
 
     names: list[str] = []
+    captions: list[str] = []
     for attachment in attachments:
         file_name = str(attachment["file_name"])
         if Path(file_name).suffix.lower() not in IMAGE_SUFFIXES:
@@ -167,7 +168,8 @@ def image_file_names(
         if not names:
             write_thumbnail(data, bundle / f"{attachment_id}.thumb.jpg")
         names.append(name)
-    return names
+        captions.append(str(attachment.get("caption", "")))
+    return names, captions
 
 
 def project_front_matter(
@@ -175,6 +177,7 @@ def project_front_matter(
     author_id: str,
     name: str,
     images: list[str],
+    captions: list[str],
     page_path: str,
 ) -> str:
     """Render the exact front matter contract shared by the project templates."""
@@ -212,6 +215,7 @@ def project_front_matter(
     fields.extend(
         (
             f"images = [{', '.join(toml_string(image) for image in images)}]",
+            f"captions = [{', '.join(toml_string(caption) for caption in captions)}]",
             "+++",
             "",
         )
@@ -233,12 +237,15 @@ def write_project(
     name = author_name(connection, author_id)
     bundle = projects_directory / thread_id
     bundle.mkdir()
-    images = image_file_names(connection, list(project["attachments"]), bundle)
+    images, captions = image_file_names(
+        connection, list(project["attachments"]), bundle
+    )
     # Discord text can carry raw HTML, and Zola's markdown passes raw HTML through, so it
     # is neutralised here rather than in the template.
     description = html.escape(str(project["description"]), quote=False)
     index = (
-        project_front_matter(project, author_id, name, images, page_path) + description
+        project_front_matter(project, author_id, name, images, captions, page_path)
+        + description
     )
     (bundle / "index.md").write_text(index, encoding="utf-8")
     return author_id, name, len(images)

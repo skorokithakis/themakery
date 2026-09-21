@@ -83,10 +83,16 @@
         </div>
         <div class="project-images" data-lightbox-group>
             {% for image in page.extra.images %}
-                <a class="project-image-link" href="{{ page.path }}{{ image }}">
-                    <img src="{{ page.path }}{{ image }}" alt="" loading="lazy">
-                    <span class="visually-hidden">View full-size image</span>
-                </a>
+                {% set caption = page.extra.captions[loop.index0] %}
+                <figure>
+                    <a class="project-image-link" href="{{ page.path }}{{ image }}" data-caption="{{ caption }}">
+                        <img src="{{ page.path }}{{ image }}" alt="{{ caption }}" loading="lazy">
+                        <span class="visually-hidden">View full-size image</span>
+                    </a>
+                    {% if caption %}
+                    <figcaption>{{ caption }}</figcaption>
+                    {% endif %}
+                </figure>
             {% endfor %}
         </div>
     </section>
@@ -113,6 +119,7 @@
             <img class="project-lightbox-image" src="" alt="">
             <button class="project-lightbox-next" type="button" aria-label="Next image">→</button>
         </div>
+        <p class="project-lightbox-caption" hidden></p>
     </div>
 </dialog>
 {% endif %}

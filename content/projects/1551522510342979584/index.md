@@ -13,6 +13,7 @@ author_name = "Nicolas Mattia"
 hero = "1551522559416336444.jpg"
 thumb = "1551522559416336444.thumb.jpg"
 images = ["1551522559416336444.jpg", "1551523261664469012.jpg"]
+captions = ["My head, scanned, turned into an egg, scaled up and printed.", "The printed egg head also acts as a bathroom companion."]
 +++
 This is my head, scanned, turned into an egg, scaled up and printed. It also acts as a bathroom companion.
 

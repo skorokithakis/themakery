@@ -13,6 +13,7 @@ author_name = "Stavros"
 hero = "1551538285371723776.jpg"
 thumb = "1551538285371723776.thumb.jpg"
 images = ["1551538285371723776.jpg", "1551538408738791424.jpg"]
+captions = ["The projects website I made for the Makery.", "A project page generated from a Discord thread, with the text and images collected automatically."]
 +++
 I made the projects website for the Makery.
 

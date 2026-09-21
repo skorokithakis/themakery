@@ -11,6 +11,7 @@ channel = "links"
 author_id = "213433184409485312"
 author_name = "Stavros"
 images = []
+captions = []
 +++
 I came across a project where someone converted a cheap analog clock to be driven by WiFi and immediately wanted one: [ESP8266_WiFi_Analog_Clock](https://github.com/jim11662418/ESP8266_WiFi_Analog_Clock). I also found more information in another project, [ventinari-clock](https://github.com/iracigt/ventinari-clock).
 

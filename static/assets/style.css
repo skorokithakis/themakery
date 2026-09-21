@@ -787,19 +787,21 @@ h3 {
     margin-top: 24px;
 }
 
-.project-images > .project-image-link {
+.project-images > figure {
     grid-column: span 4;
-    display: block;
     min-width: 0;
-    width: 100%;
-    height: clamp(180px, 22vw, 300px);
+    margin: 0;
 }
 
-.project-images > .project-image-link:first-child {
+.project-images > figure:first-child {
     grid-column: span 8;
 }
 
-.project-images > .project-image-link:nth-child(-n + 2) {
+.project-images > figure .project-image-link {
+    height: clamp(180px, 22vw, 300px);
+}
+
+.project-images > figure:nth-child(-n + 2) .project-image-link {
     height: clamp(240px, 30vw, 400px);
 }
 
@@ -808,6 +810,14 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.project-images figcaption,
+.project-lightbox-caption {
+    margin: 8px 0 0;
+    color: #4a6b6d;
+    font-size: 14px;
+    line-height: 1.4;
 }
 
 .project-lightbox {
@@ -840,11 +850,16 @@ h3 {
 
 .project-lightbox-content {
     display: grid;
-    grid-template-rows: minmax(44px, auto) minmax(0, 1fr);
+    grid-template-rows: minmax(44px, auto) minmax(0, 1fr) auto;
     width: 100%;
     height: 100%;
     min-width: 0;
     min-height: 0;
+}
+
+.project-lightbox-caption {
+    color: #f4efe0;
+    text-align: center;
 }
 
 .project-lightbox-controls {
@@ -1119,14 +1134,14 @@ h3 {
         gap: 20px;
     }
 
-    .project-images > .project-image-link,
-    .project-images > .project-image-link:first-child,
+    .project-images > figure,
+    .project-images > figure:first-child,
     .project-navigation a {
         grid-column: auto;
     }
 
-    .project-images > .project-image-link,
-    .project-images > .project-image-link:nth-child(-n + 2) {
+    .project-images > figure .project-image-link,
+    .project-images > figure:nth-child(-n + 2) .project-image-link {
         height: clamp(180px, 60vw, 300px);
     }
 

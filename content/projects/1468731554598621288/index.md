@@ -13,6 +13,7 @@ author_name = "Stavros"
 hero = "1468731571790938255.jpg"
 thumb = "1468731571790938255.thumb.jpg"
 images = ["1468731571790938255.jpg", "1468731997139763433.jpg", "1468732260063908124.jpg", "1468777679091138671.jpg", "1468934881768636416.jpg", "1468966944358010881.jpg"]
+captions = ["", "", "", "", "", ""]
 +++
 I bought some Milwaukee screwdriver bits, which are apparently the best bits in the universe because I love them already. The only problem was that their case was pretty massive, so I designed a smaller one.
 

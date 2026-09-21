@@ -13,6 +13,7 @@ author_name = "Stavros"
 hero = "1456657195553783952.jpg"
 thumb = "1456657195553783952.thumb.jpg"
 images = ["1456657195553783952.jpg", "1456660340573208691.jpg", "1456661604098637977.jpg"]
+captions = ["", "", ""]
 +++
 I started from my PCB schematic, and ran into significant issues laying it out because I wanted the board to be compact. One thing that helped early on was realising I could just remove the pins I didn't need, but even then I wasn't sure I could make everything fit.
 

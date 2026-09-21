@@ -13,6 +13,7 @@ author_name = "Stavros"
 hero = "1551028159015690340.jpg"
 thumb = "1551028159015690340.thumb.jpg"
 images = ["1551028159015690340.jpg", "1551028162404814848.jpg", "1551028469562081320.jpg", "1551029055460089897.jpg"]
+captions = ["", "", "", ""]
 +++
 I've made a digital assistant app for Android. It can register as an assistant, so long-pressing the power button makes it pop up and record audio.
 

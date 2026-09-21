@@ -4,6 +4,7 @@ const closeButton = lightbox.querySelector(".project-lightbox-close");
 const previousButton = lightbox.querySelector(".project-lightbox-previous");
 const nextButton = lightbox.querySelector(".project-lightbox-next");
 const lightboxStage = lightbox.querySelector(".project-lightbox-stage");
+const lightboxCaption = lightbox.querySelector(".project-lightbox-caption");
 const body = document.body;
 
 let group = [];
@@ -46,7 +47,13 @@ function closeLightbox() {
 
 function showImage(index) {
     currentIndex = (index + group.length) % group.length;
-    lightboxImage.src = group[currentIndex].href;
+    const link = group[currentIndex];
+    const caption = link.dataset.caption ?? "";
+
+    lightboxImage.src = link.href;
+    lightboxImage.alt = caption;
+    lightboxCaption.textContent = caption;
+    lightboxCaption.hidden = caption === "";
 }
 
 function openLightbox(link) {
