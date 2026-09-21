@@ -17,7 +17,6 @@ from pathlib import Path
 
 from PIL import Image, ImageOps
 
-
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 SLUG_SEPARATOR = re.compile(r"[^a-z0-9]+")
 PROJECTS_DIRECTORY = Path("content/projects")
