@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+script_directory="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+parent_directory="$(dirname -- "$script_directory")"
+archiver_directory="$parent_directory/makery-archiver"
+extractor_directory="$parent_directory/makery-project-extractor"
+database="${MAKERY_DATABASE:-"$HOME/Downloads/Sync/makery.db"}"
+
+cd "$script_directory"
+
+direnv exec "$archiver_directory" "$archiver_directory/archive.py" --database "$database"
+
+direnv exec "$extractor_directory" "$extractor_directory/scrape_projects.py" --database "$database"
+git -C "$extractor_directory" add -A
+if ! git -C "$extractor_directory" diff --cached --quiet; then
+    git -C "$extractor_directory" commit -m "Project updates"
+    git -C "$extractor_directory" push
+fi
+
+./import_projects.py --projects "$extractor_directory/projects" --database "$database"
+if [[ -n "$(jj diff --summary)" ]]; then
+    jj commit -m "content: Update project pages"
+    jj bookmark set master -r @-
+    jj git push
+fi
