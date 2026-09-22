@@ -1,7 +1,7 @@
 +++
 title = "Room presence sensor"
 date = "2026-09-21"
-description = "A small mmWave presence sensor for the rooms of my home, built from an ESP32 and an LD2410, in a compact 3D printed box. It reports room occupancy accurately enough to pick up breathing from a couple of metres away."
+description = "A small ESP32 and LD2410 presence sensor, boxed up for the rooms of a home, accurate enough to notice someone breathing two metres away."
 path = "projects/0sewb3/room-presence-sensor"
 [taxonomies]
 categories = ["Electronics"]
@@ -13,12 +13,10 @@ author_name = "Stavros"
 hero = "1551541582581207080.jpg"
 thumb = "1551541582581207080.thumb.jpg"
 images = ["1551541582581207080.jpg", "1551542148917370920.jpg", "1551542187622146128.jpg", "1551542202990071879.jpg", "1551644379805122591.jpg", "1551644475036672121.jpg"]
-captions = ["The presence sensor I made from an ESP32 and an LD2410.", "The first iteration of the box. It's small and pretty nice looking.", "", "", "The circuit.", "The final enclosure."]
+captions = ["The presence sensor, built from an ESP32 and an LD2410.", "The first iteration of the box: small and pretty nice looking.", "", "", "The circuit.", "The final enclosure."]
 +++
-I used an ESP32 and an LD2410 to make a presence sensor for the various rooms of my home. I flashed ESPHome firmware to the ESP32 and it worked out of the box.
+Stavros built a room presence sensor from an ESP32 and an LD2410 mmWave module, meant for the various rooms of their home. They flashed ESPHome firmware onto the ESP32, and it worked out of the box.
 
-Previous experiences with LD2410 sensors had soured me a bit, as they never worked well for me. I initially thought it was a cool sensor so I bought ten off AliExpress, but I always had bad results with them and couldn't figure out the calibration. Claude explained to me how the sensor worked and helped me write a calibrator, which is up at [ld2410-calibrator](https://github.com/skorokithakis/ld2410-calibrator). Now it works amazingly well.
+The sensor itself had a longer history. Earlier experiences with the LD2410 had soured them a little: it had never worked well, and after buying ten of them off AliExpress on the strength of how cool the sensor seemed, they kept getting bad results and could not work out the calibration. Claude explained how the sensor actually worked and helped them write a calibrator, published as [ld2410-calibrator](https://github.com/skorokithakis/ld2410-calibrator). After that, in their words, "it works amazingly well".
 
-I made a first iteration of the box, which is small and pretty nice looking. I really like it, and it works perfectly too, with super small latency.
-
-I'm really liking how accurate these sensors are, they can easily detect breathing 2m away. They pretty much solve the presence problem, at least for smallish rooms of up to 4m.
+A first iteration of the box followed, small and pretty nice looking, and a final enclosure after it. Stavros reports very low latency and real accuracy from the sensors, which can easily detect breathing two metres away, and says they pretty much solve the presence problem, at least for smallish rooms of up to four metres.
