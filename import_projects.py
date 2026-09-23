@@ -12,6 +12,7 @@ import json
 import re
 import shutil
 import sqlite3
+import sys
 import unicodedata
 from io import BytesIO
 from pathlib import Path
@@ -103,6 +104,48 @@ def author_name(connection: sqlite3.Connection, author_id: str) -> str:
     return str(row[1]) or str(row[0])
 
 
+def is_image(file_name: str) -> bool:
+    """Return whether an attachment is one the importer renders as an image."""
+
+    return Path(file_name).suffix.lower() in IMAGE_SUFFIXES
+
+
+def missing_rows(
+    connection: sqlite3.Connection, projects: list[dict[str, object]]
+) -> list[str]:
+    """List the authors and images that included projects need but the archive lacks.
+
+    This runs before any bundle is deleted. A project file newer than the local archive
+    otherwise fails part way through and leaves content/ half deleted.
+    """
+
+    missing: list[str] = []
+    for project in projects:
+        if project.get("include") is False:
+            continue
+        thread_id = str(project["thread_id"])
+        author_id = str(dict(project["author"])["id"])
+        if (
+            connection.execute(
+                "SELECT 1 FROM authors WHERE id = ?", (author_id,)
+            ).fetchone()
+            is None
+        ):
+            missing.append(f"author {author_id} (thread {thread_id})")
+        for attachment in list(project["attachments"]):
+            attachment_id = str(dict(attachment)["id"])
+            if not is_image(str(dict(attachment)["file_name"])):
+                continue
+            if (
+                connection.execute(
+                    "SELECT 1 FROM attachments WHERE id = ?", (attachment_id,)
+                ).fetchone()
+                is None
+            ):
+                missing.append(f"attachment {attachment_id} (thread {thread_id})")
+    return missing
+
+
 def attachment_data(connection: sqlite3.Connection, attachment_id: str) -> bytes | None:
     """Return stored attachment bytes, or None when the archive skipped the file."""
 
@@ -158,7 +201,7 @@ def image_file_names(
     data_by_name: dict[str, bytes] = {}
     for attachment in attachments:
         file_name = str(attachment["file_name"])
-        if Path(file_name).suffix.lower() not in IMAGE_SUFFIXES:
+        if not is_image(file_name):
             continue
 
         attachment_id = str(attachment["id"])
@@ -318,6 +361,13 @@ def main(args: argparse.Namespace) -> None:
     projects.sort(key=lambda project: str(project["thread_id"]))
     print(f"{len(projects)} project file(s) in {args.projects}")
     connection = connect_readonly(args.database)
+    missing = missing_rows(connection, projects)
+    if missing:
+        sys.exit(
+            "The archive is missing rows that the project files need, so it is probably "
+            "older than them. Sync the database and run again. Nothing was changed.\n"
+            + "\n".join(f"  {row}" for row in missing)
+        )
     clear_bundles(PROJECTS_DIRECTORY)
     clear_bundles(MAKERS_DIRECTORY)
 

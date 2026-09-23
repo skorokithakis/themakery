@@ -43,7 +43,9 @@ output, run `.symphony/serve`, which builds and serves `public/` on port 8000.
 * Image captions are a parallel list in front matter (`extra.captions` beside
   `extra.images`). `.gnosis/entries.jsonl` says why.
 * An attachment with no bytes in the archive is normal, not an error. The page publishes
-  without it and picks it up on the next import if the archiver recovers it.
+  without it and picks it up on the next import if the archiver recovers it. A missing
+  attachment or author row is different: it means the archive is older than the project
+  files, so the importer exits before it deletes anything.
 * Python scripts follow the archiver's conventions: uv shebang, PEP 723 dependencies,
   typed signatures, no defensive `try`/`except`, `pre-commit run --all-files` after each
   change. No tests, by decision.
