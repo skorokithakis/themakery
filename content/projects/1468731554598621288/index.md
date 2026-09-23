@@ -4,7 +4,7 @@ date = "2026-02-04"
 description = "I bought a set of Milwaukee screwdriver bits and loved them immediately, but the case they came in was pretty massive, so I designed a much smaller one and printed it. The lettering on the lid is embossed and flood filled in a second colour, which meant working out how to do a multi colour print while my AMS was misbehaving. In the end the AMS held together long enough to get the part printed, and the result is fantastic."
 path = "projects/4gwhkf/a-compact-case-for-milwaukee-screwdriver-bits"
 [taxonomies]
-categories = ["Making and fabrication"]
+categories = ["Fabrication"]
 [extra]
 thread_id = "1468731554598621288"
 channel = "makes"

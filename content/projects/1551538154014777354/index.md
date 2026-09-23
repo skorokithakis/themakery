@@ -1,7 +1,7 @@
 +++
 title = "Makery projects website"
 date = "2026-09-21"
-description = "A website that turns the Makery's Discord threads into project pages, so the things people build here have somewhere to live and somewhere to be pointed at."
+description = "A website that gathers the Makery's Discord project threads into tidy project pages, so there is always somewhere to point people to see what the community is building."
 path = "projects/rskwmz/makery-projects-website"
 [taxonomies]
 categories = ["Software"]
@@ -13,10 +13,10 @@ author_name = "Stavros"
 hero = "1551538285371723776.jpg"
 thumb = "1551538285371723776.thumb.jpg"
 images = ["1551538285371723776.jpg", "1551538408738791424.jpg"]
-captions = ["The projects website Stavros built for the Makery.", "A project page assembled from the text and images of a Discord thread."]
+captions = ["The projects website Stavros made for the Makery.", "A project page the site made from a Discord thread by collecting its text and images."]
 +++
-Stavros built the projects website for the Makery, and the machinery behind it starts further back than the pages themselves. They collect all the Discord messages into a database, and use that same store to generate both the newsletter and the site.
+Stavros built a projects website for the Makery. He already collects all of the server's Discord messages in a database, which he uses to generate the newsletter, and the same collection now feeds this site too.
 
-From there the site does the reading. It looks at all the threads, and only the threads, works out which ones are about a project, gathers up the text and the images, and turns each one into a project page.
+The site looks only at threads in the Discord, works out which ones are about a project, gathers up their text and images, and turns each one into a project page. For now the result is "a bit of a mishmash of everything", since the threads haven't always been kept tidy, but Stavros expects that a little curation will make it great.
 
-As they put it, the result is "a bit of a mishmash of everything" for now, because thread hygiene in the server has not been perfect, though with a bit of curation they think it will be great. The point of it is to have something to point people to for all the cool stuff done here: Stavros generally likes telling everyone about what they are building, but cannot always find the time for a proper writeup. The generated text still reads like an LLM wrote it, which they plan to fix later.
+His aim is to have one place to point people to for all the cool things made at the Makery. He enjoys telling everyone about what he's building but can't always find the time for a proper writeup, and this lets the threads do some of that work. He notes that the generated text reads as "LLMese" for the moment, something he plans to fix later.
