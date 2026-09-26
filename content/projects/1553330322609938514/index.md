@@ -10,8 +10,8 @@ thread_id = "1553330322609938514"
 channel = "projects"
 author_id = "213433184409485312"
 author_name = "Stavros"
-hero = "1553330716086108180.jpg"
-thumb = "1553330716086108180.thumb.jpg"
+hero = "1553333071908970526.jpg"
+thumb = "1553333071908970526.thumb.jpg"
 images = ["1553330716086108180.jpg", "1553330914849722389.jpg", "1553331280928710656.jpg", "1553333071908970526.jpg"]
 captions = ["The current state of Wherewhen, before Stavros has done a pass on the interface.", "The calendar view, where times can be adjusted by dragging and driving or walking times between places are shown.", "The ideas list, where places can be added now and placed on a map later.", "The Wherewhen logo, made by Claude and kept as it was when the tokens ran out."]
 +++
