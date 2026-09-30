@@ -242,9 +242,21 @@ def project_front_matter(
         "+++",
         f"title = {toml_string(str(project['title']))}",
         f"date = {toml_string(str(project['started_at'])[:10])}",
-        f"description = {toml_string(str(project['summary']))}",
-        f"path = {toml_string(page_path)}",
     ]
+    # Zola's native 'updated' records the last change to the write-up. It is only honest
+    # when it is later than the first post, and older project files have no field at all.
+    # ISO 8601 date prefixes compare correctly as plain strings.
+    updated_at = project.get("updated_at")
+    if updated_at is not None:
+        updated_date = str(updated_at)[:10]
+        if updated_date > str(project["started_at"])[:10]:
+            fields.append(f"updated = {toml_string(updated_date)}")
+    fields.extend(
+        (
+            f"description = {toml_string(str(project['summary']))}",
+            f"path = {toml_string(page_path)}",
+        )
+    )
     if "category" in project:
         fields.extend(
             (

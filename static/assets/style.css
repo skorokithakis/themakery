@@ -381,6 +381,23 @@ h3 {
     letter-spacing: 0.06em;
 }
 
+.footer-feed {
+    display: inline-flex;
+    margin-left: 4px;
+    color: inherit;
+    vertical-align: -2px;
+    opacity: 0.7;
+}
+
+.footer-feed:hover,
+.footer-feed:focus-visible {
+    opacity: 1;
+}
+
+.footer-feed svg {
+    display: block;
+}
+
 .metadata {
     color: #4a6b6d;
     font-family: ui-monospace, Menlo, Monaco, Consolas, monospace;

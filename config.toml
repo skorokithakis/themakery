@@ -1,3 +1,7 @@
 base_url = "https://www.themakery.cc"
+title = "The Makery"
+description = "Projects made by the Makery community."
+generate_feeds = true
+feed_filenames = ["atom.xml"]
 compile_sass = false
 taxonomies = [{ name = "categories", feed = false }]

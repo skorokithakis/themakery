@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{ lang }}">
+    <title>{{ config.title }}</title>
+    {%- if config.description %}
+    <subtitle>{{ config.description }}</subtitle>
+    {%- endif %}
+    <link rel="self" type="application/atom+xml" href="{{ feed_url | safe }}"/>
+    <link rel="alternate" type="text/html" href="{{ config.base_url | safe }}"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    {# Zola's own feed sorting is by published date, which would hide projects that were
+       written earlier but updated recently. Sort here by the later of the two dates
+       instead, then keep the newest handful. #}
+    {%- set projects = [{"page": project, "effective": project.updated | default(value=project.date, boolean=true)} for project in pages if project.extra.thread_id is defined] | sort(attribute="effective") | reverse %}
+    {%- set entries = projects[:20] %}
+    {%- if entries | length > 0 %}
+    <updated>{{ entries[0].effective | date(format="%Y-%m-%dT%H:%M:%S%:z") }}</updated>
+    {%- endif %}
+    <id>{{ feed_url | safe }}</id>
+    {%- for entry in entries %}
+    {%- set page = entry.page %}
+    {%- set is_updated = page.updated is defined and page.updated %}
+    <entry>
+        <title>{% if is_updated %}Updated: {{ page.title }}{% else %}{{ page.title }}{% endif %}</title>
+        <published>{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%:z") }}</published>
+        <updated>{{ entry.effective | date(format="%Y-%m-%dT%H:%M:%S%:z") }}</updated>
+        <author>
+            <name>{{ page.extra.author_name }}</name>
+        </author>
+        <link rel="alternate" type="text/html" href="{{ page.permalink | safe }}"/>
+        <id>{% if is_updated %}{{ page.permalink ~ "#updated-" ~ page.updated }}{% else %}{{ page.permalink }}{% endif %}</id>
+        {%- set hero = "" %}
+        {%- if page.extra.hero is defined %}
+        {%- set alt = page.title | escape %}
+        {%- set hero = '<p><img src="' ~ config.base_url ~ page.path ~ page.extra.hero ~ '" alt="' ~ alt ~ '"></p>' %}
+        {%- endif %}
+        <content type="html" xml:base="{{ page.permalink | safe }}">{{ hero ~ page.content }}</content>
+    </entry>
+    {%- endfor %}
+</feed>
