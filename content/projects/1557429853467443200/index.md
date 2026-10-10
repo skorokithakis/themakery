@@ -17,6 +17,6 @@ captions = ["The cheap shoe rack Stavros set out to convert into a server rack."
 +++
 Stavros set out to (try to) convert a cheapo shoe rack into a server rack.
 
-After finishing the first bit, he drilled holes in the body of the rack so the shelves could sit closer to the wooden part. Getting the final shelf layout in place took some coaxing: the 10 € rack, in his words, "was not built to my exacting tolerances," and needed some pushing and pulling to get into shape. With the layout settled, he cut the rack to size.
+After finishing the first bit, he drilled holes in the body of the rack so the shelves could sit closer to the wooden part. Getting the final shelf layout in place took some coaxing: the 10 € rack, in his words, "was not built to my exacting tolerances," and needed some pushing and pulling to get into shape. With the layout settled, he cut the rack to size, doing it "the old-fashioned way" with a drill and saw.
 
 The finished rack then moved to its final resting place and was loaded up with all of his servers, ready for duty.
